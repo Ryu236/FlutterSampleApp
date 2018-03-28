@@ -6,19 +6,10 @@ void main() => runApp(new SampleApp());
 class SampleApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-
     return new MaterialApp(
-      title: 'Flutter Smaple App',
+      title: 'Startup Name Generator',
+      home: new RandomWords(),
       debugShowCheckedModeBanner: false,
-      home: new Scaffold(
-        appBar: new AppBar(
-          title: new Text('Flutter Sample App'),
-        ),
-        body: new Center(
-          //child: new Text(wordPair.asPascalCase),
-          child: new RandomWords(),
-        ),
-      ),
     );
   }
 }
@@ -29,9 +20,43 @@ class RandomWords extends StatefulWidget {
 }
 
 class RandomWordsState extends State<RandomWords> {
+  final _suggestions = <WordPair>[];
+  final _biggerFont = const TextStyle(fontSize: 18.0);
+
   @override
   Widget build(BuildContext context) {
-    final wordPair = new WordPair.random();
-    return new Text(wordPair.asPascalCase);
+    return new Scaffold(
+     appBar: new AppBar(
+       title: new Text('Startup Name Generator'),
+      ),
+      body: _buildSuggestions(),
+    );
+  }
+
+  Widget _buildSuggestions() {
+    return new ListView.builder(
+      padding: const EdgeInsets.all(16.0),
+      itemBuilder: (context, i) {
+        if (i.isOdd) return new Divider();
+        // the syntax "i ~/ 2" divides i by 2 and returns an integer result.
+        // for example: 1, 2, 3, 4, 5 becomes 0, 1, 1, 2, 2.
+        // this calculates the actual number of word pairings in the listview,
+        // minus the divider widgets.
+        final index = i ~/2;
+        if (index >= _suggestions.length) {
+          _suggestions.addAll(generateWordPairs().take(10));
+        }
+        return _buildRow(_suggestions[index]);
+      }
+    );
+  }
+
+  Widget _buildRow(WordPair pair) {
+    return new ListTile(
+      title: new Text(
+        pair.asPascalCase,
+        style: _biggerFont,
+      ),
+    );
   }
 }

@@ -11,7 +11,7 @@ class SampleApp extends StatelessWidget {
       theme: new ThemeData(
         primaryColor: Colors.green,
       ),
-      home: new RandomWords(),git
+      home: new RandomWords(),
       debugShowCheckedModeBanner: false,
     );
   }

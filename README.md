@@ -1,6 +1,6 @@
-# sample
+# Flutter Sample Aplication
 
-A new Flutter project.
+This app is a tutorial application.
 
 ## Getting Started
 
